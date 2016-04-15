@@ -4,15 +4,25 @@ var Student = require('../models/students');
 
 // GET ALL students
 router.get('/', function(req, res, next) {
-  Student.find({}, function(err, students) {
-    if(err) {
+  Student.find({})
+    .then(function(students){
+      res.status(200).json({
+        status: 'success',
+        data: students
+      })
+    })
+    .catch(function(err) {
       return next(err);
-    }
-    res.status(200).json({
-      status: 'success',
-      data: students
     });
-  });
+  // Student.find({}, function(err, students) {
+  //   if(err) {
+  //     return next(err);
+  //   }
+  //   res.status(200).json({
+  //     status: 'success',
+  //     data: students
+  //   });
+  // });
 });
 
 module.exports = router;

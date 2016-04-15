@@ -3,8 +3,8 @@ var router = express.Router();
 var moment = require('moment');
 var jwt = require('jwt-simple');
 
-var User = require('../models/users');
-var config = require('../../_config')
+var User = require('../models/user');
+var config = require('../../_config');
 
 
 router.post('/register', function(req, res, next) {
@@ -68,7 +68,7 @@ router.post('/login', function(req, res, next) {
         user: user.email
       })
     });
-
+  });
 });
 
 router.get('/logout', function(req, res, next) {
@@ -85,7 +85,7 @@ function generateToken(user) {
     sub: user._id
   };
   return jwt.encode(payload, config.TOKEN_SECRET);
-}
+};
 
 // ensure authenticated
 function ensureAuthenticated(req, res, next) {
@@ -122,20 +122,20 @@ function ensureAuthenticated(req, res, next) {
     req.user = user;
     next();
   });
-}
+};
 
 // ensure admin
 function ensureAdmin(req, res, next) {
   // check for the user object
   // ensure admin is true
-  if(!(req.user && req.user.admin) {
+  if(!(req.user && req.user.admin)) {
     return res.status(401).json({
       status: 'fail',
       message: 'User is not authorized'
     })
     // throw err
-  });
+  };
   next()
-}
+};
 
 module.exports = router;

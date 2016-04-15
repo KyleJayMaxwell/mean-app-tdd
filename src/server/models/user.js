@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcryptjs');
 
-var config = require('../../../_config');
+var config = require('../../_config');
 
 var UserSchema = new Schema({
   email:{
@@ -24,9 +24,9 @@ var UserSchema = new Schema({
 UserSchema.pre('save', function(next) {
   var user = this;
   // only has password if it's new or modified
-  if(!user.isModified('password') {
+  if(!user.isModified('password')) {
     return next();
-  })
+  }
 
   //  generate salt
   bcrypt.getSalt(config.SALT_WORK_FACTOR, function(err, salt) {
